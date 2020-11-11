@@ -7,5 +7,6 @@ How it works:
 To run:
 1) Run npm install --global expo-cli.
 2) Run npm install firebase.
+3) Run expo start.
 3) You should be good to go!
 
