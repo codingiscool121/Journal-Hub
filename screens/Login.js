@@ -21,7 +21,7 @@ authUser=async(emailId,password)=>{
             // const disabledaccount=await firebase.auth().FirebaseAuthInvalidUserException();
             if(response){
              this.props.navigation.navigate('Write');
-             alert("Welcome, " + emailId + ". You are being redirected to the StoryHub dashboard.");
+             alert("Welcome, " + emailId + ".");
              alert("REMEMBER: In Journal Hub, your entries can be read by other people. Please be sure to write entries that you(" + emailId + ") are ok with other people reading.")
             }
             // if(disabledaccount){
@@ -30,7 +30,8 @@ authUser=async(emailId,password)=>{
         } catch (error) {
             switch(error.code){
                 case 'auth/user-not-found':
-                    alert("It appears that you don't have an account with Journal Hub, "+ emailId +". Please create an account, and then come back to this page! 🧾");
+                    alert("It appears that you don't have an account with Journal Hub, "+ emailId +". You are being sent to the Sign Up page to create an account. 🧾");
+                    this.props.navigation.navigate('signup');
                 break;
                 case 'auth/invalid-email':
                     alert("Your email is invalid. You should format it to be something like example@domain.com.");
@@ -60,7 +61,7 @@ render(){
             })
         }}
         />
-      <TextInput style={styles.loginBox} placeholder="Enter Your Password" secureTextEntry={true}
+      <TextInput style={styles.signUp} placeholder="Enter Your Password" secureTextEntry={true}
       onChangeText={text=>{
           this.setState({
               password:text
@@ -73,6 +74,11 @@ render(){
           )
       }} style={styles.text}>
         <Text>Login</Text>      
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>{
+          this.props.navigation.navigate('signup')
+      }} style={styles.text}>
+        <Text>Sign Up</Text>      
       </TouchableOpacity>
         </View>
     )
@@ -95,7 +101,7 @@ const styles= StyleSheet.create({
         paddingLeft:10,
         alignSelf:"center",
         justifyContent: 'center',
-        borderColor:"turquoise"
+        borderColor:"#00FFFF"
     },
     text:{
         fontSize:30,
@@ -116,5 +122,18 @@ const styles= StyleSheet.create({
         textAlign:'center',
         alignSelf: 'center',
         backgroundColor:"grey"
+    },
+
+    signUp:{
+        width:300,
+        height:40,
+        borderWidth:1.5,
+        fontSize:20,
+        margin:10,
+        paddingLeft:10,
+        alignSelf:"center",
+        justifyContent: 'center',
+        borderColor:"#7DF9FF"
     }
+    
 })
