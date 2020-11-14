@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import WriteStoryScreen from './screens/WriteStoryScreen';
 import ReadStoryScreen from './screens/ReadStoryScreen';
 import Login from './screens/Login';
+import SignUp from './screens/SignUp'
 export default class App extends React.Component {
 	render() {
 		return (
@@ -54,6 +55,7 @@ const BottomTab = createBottomTabNavigator(
 
 const SwitchNavigator=createSwitchNavigator({
 	login:{screen:Login},
+	signup:{screen:SignUp},
 	BottomTab:{screen:BottomTab}
 })
 const AppContainer = createAppContainer(SwitchNavigator);
