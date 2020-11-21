@@ -4,8 +4,10 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import WriteStoryScreen from './screens/WriteStoryScreen';
 import ReadStoryScreen from './screens/ReadStoryScreen';
+import changePassword from './screens/changePassword';
 import Login from './screens/Login';
-import SignUp from './screens/SignUp'
+import SignUp from './screens/SignUp';
+
 export default class App extends React.Component {
 	render() {
 		return (
@@ -28,6 +30,7 @@ const BottomTab = createBottomTabNavigator(
 	{
 		Write: { screen: WriteStoryScreen },
 		Read: { screen: ReadStoryScreen },
+		AccountSettings:{screen:changePassword},
 	},
 	{
 		defaultNavigationOptions: ({ navigation }) => ({
@@ -47,6 +50,13 @@ const BottomTab = createBottomTabNavigator(
 							style={{ width: 40, height: 40 }}
 						/>
 					);
+				}else if(routeName === 'AccountSettings'){
+					return(
+						<Image
+						source={require('./assets/passwordicon.png')}
+						style={{width:40,height:40}}
+                        />
+						)
 				}
 			},
 		}),
@@ -56,6 +66,6 @@ const BottomTab = createBottomTabNavigator(
 const SwitchNavigator=createSwitchNavigator({
 	login:{screen:Login},
 	signup:{screen:SignUp},
-	BottomTab:{screen:BottomTab}
+	BottomTab:{screen:BottomTab},
 })
 const AppContainer = createAppContainer(SwitchNavigator);
