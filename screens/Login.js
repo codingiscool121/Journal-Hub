@@ -14,6 +14,16 @@ export default class Login extends React.Component{
         }
     }
   
+    resetPassword=async(emailId)=>{
+        const reset = firebase.auth().sendPasswordResetEmail(emailId='emailId');
+       if(reset){
+           alert("A link has been sent to your account.")
+       }else{
+           alert("An error occured. Contact codersaregreat119@gmail.com for assistance.")
+       }
+   }
+   
+
 authUser=async(emailId,password)=>{
     if(emailId && password){
         try {
@@ -22,11 +32,7 @@ authUser=async(emailId,password)=>{
             if(response){
              this.props.navigation.navigate('Write');
              alert("Welcome, " + emailId + ".");
-             alert("REMEMBER: In Journal Hub, your entries can be read by other people. Please be sure to write entries that you(" + emailId + ") are ok with other people reading.")
             }
-            // if(disabledaccount){
-            //     alert("Hello "+emailId+". For some reason, it appears that your account has been disabled. This is all we know. Please contact codersaregreat119@gmail.com for more details.")
-            // }
         } catch (error) {
             switch(error.code){
                 case 'auth/user-not-found':
@@ -39,9 +45,8 @@ authUser=async(emailId,password)=>{
                 case 'auth/wrong-password':
                     alert("Your password is invalid, "+ emailId + "! Please enter the correct password to continue.")
                     break;
-                // case 'auth/disabled-account':
-                //     alert("Your account has been disabled, "+ emailId + ".");
-                //     break;
+                case 'auth/user-disabled':
+                    alert("Your account has been disabled, " + emailId + ". Please contact codersaregreat119@gmail.com for assistance. We are very sorry for the inconvenience.")
             }
         }
     }else{
@@ -53,7 +58,7 @@ authUser=async(emailId,password)=>{
 render(){
     return(
         <View>
-        <Text style={styles.title}> Login To StoryHub</Text>
+        <Text style={styles.title}> Login To Journal Hub</Text>
         <TextInput style={styles.loginBox} placeholder="Email(example@domain.com) " keyboardType='email-address'
         onChangeText={text=>{
             this.setState({
@@ -78,7 +83,18 @@ render(){
       <TouchableOpacity onPress={()=>{
           this.props.navigation.navigate('signup')
       }} style={styles.text}>
-        <Text>Sign Up</Text>      
+        <Text>Sign Up</Text>    
+      </TouchableOpacity>
+      {/* <TouchableOpacity onPress={()=>{
+          this.props.navigation.navigate('iphone')
+      }} style={styles.text}>
+        <Text>Sign Up With Iphone</Text>    
+      </TouchableOpacity> */}
+      <TouchableOpacity onPress={()=>{
+       this.resetPassword();
+    //   alert("This feature is still in development. If you have forgotten your password, please contact codersaregreat119@gmail.com for assistance. NOTE: WE DO NOT STORE USER PASSWORDS. WE SEND A RESET EMAIL THROUGH A DATABASE, WHICH HANDLES ALL THE DATA. FOR DATA PRIVACY CONCERNS, PLEASE GO TO THE FIREBASE DOCS.")
+}} style={styles.text}>
+      <Text>Forgot Your Password?</Text>
       </TouchableOpacity>
         </View>
     )
@@ -121,8 +137,8 @@ const styles= StyleSheet.create({
         fontSize: 40,
         textAlign:'center',
         alignSelf: 'center',
-        backgroundColor:"grey"
-    },
+        color:'#90EE90',
+        },
 
     signUp:{
         width:300,
