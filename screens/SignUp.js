@@ -14,14 +14,24 @@ export default class SignUp extends React.Component{
                 const create = await firebase.auth().createUserWithEmailAndPassword(emailId,password)
                 // const disabledaccount=await firebase.auth().FirebaseAuthInvalidUserException();
                 if(create){
-                 this.props.navigation.navigate('login');
-                 alert("Hello, " + emailId + ". You have successfully been signed up for Journal Hub, and are now being redirected to the login page. You can sign in with your credentials there.");
+                var sure = confirm("In Journal Hub, your entries can be read by other people. Please be sure to write entries that you(" + emailId + ") are ok with other people reading. Please only click Ok if you agree.");
+                if(sure){
+                alert("Hello, " + emailId + ". You have successfully been signed up for Journal Hub, and are now being redirected to the login page. You can sign in with your credentials there.");
+                this.props.navigation.navigate('login');
+                }else{
+                    alert("You have to click OK to create an account. It signifies that you agree to the terms.");
+                }
                 }
             } catch (error) {
                 switch(error.code){
                     case 'auth/invalid-email':
                         alert("Your email is invalid, or in an incorrect format. You formatted it like this: "+emailId+". You should format it to be something like example@domain.com.");
                         break;
+                    case 'auth/email-already-in-use':
+                        alert("The email id " + emailId + "is already in use. Please use a different email id to sign up.");
+                        break;
+                    case 'auth/weak-password':
+                        alert("Hello, " + emailId + ". Your password is not strong enough. It could be stolen by hackers. Please change your desired password, and make it longer than 6 characters.") 
                 }
             }
         }else{
