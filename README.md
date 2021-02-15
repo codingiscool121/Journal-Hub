@@ -5,8 +5,7 @@ How it works:
 2) Once you get in, there will be a page where you can write your entry, and a page where you can read other people's entries.
 
 To run(on command prompt):
-1) Run npm install --global expo-cli.
-2) Run npm install firebase.
+1) Run npm install.
 3) Run expo start.
 3) You should be good to go!
 
